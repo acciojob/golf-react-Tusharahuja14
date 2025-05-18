@@ -8,9 +8,8 @@ class App extends Component {
       renderBall: false,
       ballPosition: 0,
     };
-
-    this.handleKeyDown = this.handleKeyDown.bind(this);
     this.buttonClickHandler = this.buttonClickHandler.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
@@ -35,7 +34,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="playground">
+      <div className="playground" data-testid="playground">
         {!this.state.renderBall ? (
           <button className="start" onClick={this.buttonClickHandler}>
             Start
@@ -46,7 +45,6 @@ class App extends Component {
             style={{
               left: `${this.state.ballPosition}px`,
               position: "absolute",
-              top: "100px",
             }}
           ></div>
         )}
