@@ -1,42 +1,58 @@
-import React, { Component, useState } from "react";
-import '../styles/App.css';
+import React, { Component } from "react";
+import "../styles/App.css";
 
 class App extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            renderBall: false,
-            posi : 0,
-            ballPosition: { left: "0px" }
-        };
-        this.renderChoice = this.renderBallOrButton.bind(this)
-        this.buttonClickHandler = this.buttonClickHandler.bind(this)
+  constructor(props) {
+    super(props);
+    this.state = {
+      renderBall: false,
+      ballPosition: 0,
     };
 
-    buttonClickHandler() {
-   
-   }
-    renderBallOrButton() {
-		if (this.state.renderBall) {
-		    return <div className="ball" style={this.state.ballPosition}></div>
-		} else {
-		    return <button onClick={this.buttonClickHandler} >Start</button>
-		}
-    }
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleStartClick = this.handleStartClick.bind(this);
+  }
 
-    // bind ArrowRight keydown event
-    componentDidMount() {
-      
-    }
+  componentDidMount() {
+    document.addEventListener("keydown", this.handleKeyDown);
+  }
 
-    render() {
-        return (
-            <div className="playground">
-                {this.renderBallOrButton()}
-            </div>
-        )
+  componentWillUnmount() {
+    document.removeEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown(event) {
+    if (event.key === "ArrowRight" && this.state.renderBall) {
+      this.setState((prevState) => ({
+        ballPosition: prevState.ballPosition + 5,
+      }));
     }
+  }
+
+  handleStartClick() {
+    this.setState({ renderBall: true });
+  }
+
+  render() {
+    return (
+      <div className="playground">
+        {!this.state.renderBall ? (
+          <button className="start" onClick={this.handleStartClick}>
+            Start
+          </button>
+        ) : (
+          <div
+            className="ball"
+            style={{
+              left: `${this.state.ballPosition}px`,
+              position: "absolute",
+              top: "100px",
+            }}
+          ></div>
+        )}
+      </div>
+    );
+  }
 }
-
 
 export default App;
