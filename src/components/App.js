@@ -1,56 +1,44 @@
 import React, { Component } from "react";
-import "../styles/App.css";
+import '../styles/App.css';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
       renderBall: false,
-      ballPosition: 0,
+      ballPosition: { left: "0px" }
     };
     this.buttonClickHandler = this.buttonClickHandler.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
-  componentDidMount() {
+  buttonClickHandler() {
+    this.setState({
+      renderBall: true
+    });
     document.addEventListener("keydown", this.handleKeyDown);
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode === 39) { // Right arrow key
+      const newPos = parseInt(this.state.ballPosition.left) + 5;
+      this.setState({
+        ballPosition: { left: `${newPos}px` }
+      });
+    }
   }
 
   componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-handleKeyDown(event) {
-  if (event.key === "ArrowRight" && this.state.renderBall) {
-    this.setState(
-      (prevState) => ({ ballPosition: prevState.ballPosition + 5 }),
-      () => console.log("Ball moved to:", this.state.ballPosition)
-    );
-  }
-}
-
-
-  buttonClickHandler() {
-    this.setState({ renderBall: true });
-  }
-
   render() {
     return (
-      <div className="playground" data-testid="playground">
-        {!this.state.renderBall ? (
-          <button className="start" onClick={this.buttonClickHandler}>
-            Start
-          </button>
+      <div className="playground">
+        {this.state.renderBall ? (
+          <div className="ball" style={this.state.ballPosition}></div>
         ) : (
-        <div
-  className="ball"
-  style={{
-    left: `${this.state.ballPosition}px`,
-    position: "absolute",
-    top: "100px",
-  }}
-></div>
-
+          <button className="start" onClick={this.buttonClickHandler}>Start</button>
         )}
       </div>
     );
