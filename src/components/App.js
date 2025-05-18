@@ -20,13 +20,15 @@ class App extends Component {
     document.removeEventListener("keydown", this.handleKeyDown);
   }
 
-  handleKeyDown(event) {
-    if (event.key === "ArrowRight" && this.state.renderBall) {
-      this.setState((prevState) => ({
-        ballPosition: prevState.ballPosition + 5,
-      }));
-    }
+handleKeyDown(event) {
+  if (event.key === "ArrowRight" && this.state.renderBall) {
+    this.setState(
+      (prevState) => ({ ballPosition: prevState.ballPosition + 5 }),
+      () => console.log("Ball moved to:", this.state.ballPosition)
+    );
   }
+}
+
 
   buttonClickHandler() {
     this.setState({ renderBall: true });
@@ -40,13 +42,15 @@ class App extends Component {
             Start
           </button>
         ) : (
-          <div
-            className="ball"
-            style={{
-              left: `${this.state.ballPosition}px`,
-              position: "absolute",
-            }}
-          ></div>
+        <div
+  className="ball"
+  style={{
+    left: `${this.state.ballPosition}px`,
+    position: "absolute",
+    top: "100px",
+  }}
+></div>
+
         )}
       </div>
     );
