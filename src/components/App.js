@@ -10,7 +10,7 @@ class App extends Component {
     };
 
     this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleStartClick = this.handleStartClick.bind(this);
+    this.buttonClickHandler = this.buttonClickHandler.bind(this);
   }
 
   componentDidMount() {
@@ -29,7 +29,7 @@ class App extends Component {
     }
   }
 
-  handleStartClick() {
+  buttonClickHandler() {
     this.setState({ renderBall: true });
   }
 
@@ -37,7 +37,7 @@ class App extends Component {
     return (
       <div className="playground">
         {!this.state.renderBall ? (
-          <button className="start" onClick={this.handleStartClick}>
+          <button className="start" onClick={this.buttonClickHandler}>
             Start
           </button>
         ) : (
